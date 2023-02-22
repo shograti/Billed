@@ -95,8 +95,7 @@ export default class {
   };
 
   handleEditTicket(e, bill, bills) {
-    // [BUG] Resetting the counter to 0 each time you click on a bill
-    this.counter = 0;
+    console.log(bill);
     if (this.counter === undefined || this.id !== bill.id) this.counter = 0;
     if (this.id === undefined || this.id !== bill.id) this.id = bill.id;
     if (this.counter % 2 === 0) {
@@ -157,6 +156,8 @@ export default class {
     }
 
     bills.forEach((bill) => {
+      //[BUG] Removing the event listener on bill so it prevents conflicts
+      $(`#open-bill${bill.id}`).off();
       $(`#open-bill${bill.id}`).click((e) =>
         this.handleEditTicket(e, bill, bills)
       );

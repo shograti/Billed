@@ -41,51 +41,25 @@ export default class {
         .bills()
         .list()
         .then((snapshot) => {
-          /*    
-    [BUG] Les notes de frais ne s'affichent pas dans l'ordre de date décroissant
-    const bills = snapshot
-          .map(doc => {
+          const bills = snapshot;
+          bills.map((doc) => {
             try {
               return {
                 ...doc,
                 date: formatDate(doc.date),
-                status: formatStatus(doc.status)
-              }
-            } catch(e) {
+                status: formatStatus(doc.status),
+              };
+            } catch (e) {
               // if for some reason, corrupted data was introduced, we manage here failing formatDate function
               // log the error and return unformatted date in that case
-              console.log(e,'for',doc)
+              console.log(e, 'for', doc);
               return {
                 ...doc,
                 date: doc.date,
-                status: formatStatus(doc.status)
-              }
+                status: formatStatus(doc.status),
+              };
             }
-          })
-          console.log('length', bills.length)
-        return bills
-        */
-          const bills = snapshot
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map((doc) => {
-              try {
-                return {
-                  ...doc,
-                  date: formatDate(doc.date),
-                  status: formatStatus(doc.status),
-                };
-              } catch (e) {
-                // if for some reason, corrupted data was introduced, we manage here failing formatDate function
-                // log the error and return unformatted date in that case
-                console.log(e, 'for', doc);
-                return {
-                  ...doc,
-                  date: doc.date,
-                  status: formatStatus(doc.status),
-                };
-              }
-            });
-          console.log('length', bills.length);
+          });
           return bills;
         });
     }
